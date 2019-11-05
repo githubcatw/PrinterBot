@@ -113,7 +113,7 @@ namespace PrinterBot
             if (text != "" && this.bw.IsBusy != true)
             {
                 this.bw.RunWorkerAsync(text); // передаем эту переменную в виде аргумента методу bw_DoWork
-                BtnRun.Text = "Porg is running...";
+                BtnRun.Text = "Bot is running...";
             }
         }
 
