@@ -83,6 +83,7 @@
             this.textBox1.Size = new System.Drawing.Size(383, 20);
             this.textBox1.TabIndex = 0;
             this.textBox1.Text = "Full name, if on network include the path.";
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // testpage
             // 
@@ -92,6 +93,7 @@
             this.testpage.TabIndex = 2;
             this.testpage.Text = "Print test page";
             this.testpage.UseVisualStyleBackColor = true;
+            this.testpage.Click += new System.EventHandler(this.testpage_Click);
             // 
             // Form1
             // 

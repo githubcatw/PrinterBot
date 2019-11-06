@@ -186,6 +186,26 @@ namespace PrinterBot
 
             e.Graphics.DrawImage(img, m);
         }
+
+        private void testpage_Click(object sender, EventArgs e) {
+            PrintDocument doc = new PrintDocument();
+            doc.PrinterSettings.PrinterName = printer;
+            doc.PrintPage += (object send, PrintPageEventArgs ppeArgs) => {
+                Font FontNormal = new Font("Verdana", 12);
+                Graphics g = ppeArgs.Graphics;
+                string outp = "  PrinterBot Test Page\n" +
+                              "  " + printer + "\n" + 
+                              "  If you see this page, PrintBot is configured properly.\n\n" +
+                              "  What is PrinterBot?\n" +
+                              "  It's a Telegram bot that prints anything sent to it.";
+                g.DrawString(outp, FontNormal, Brushes.Black, 0, 20, new StringFormat());
+            };
+            doc.Print();
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e) {
+            printer = textBox1.Text;
+        }
     }
 
 }
