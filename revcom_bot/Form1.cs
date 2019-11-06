@@ -177,7 +177,7 @@ namespace PrinterBot
         private void PrintPhotoPage(object o, PrintPageEventArgs e) {
             Image img = Image.FromFile(printPhoto);
             Point loc = new Point(100, 100);
-            e.Graphics.DrawImage(img, loc);
+            e.Graphics.DrawImage(img, e.MarginBounds);
         }
     }
 
