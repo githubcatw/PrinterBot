@@ -152,6 +152,8 @@ namespace PrinterBot
 
             if (!Directory.Exists(localPath + "TMP"))
                 Directory.CreateDirectory(localPath + "TMP");
+            Directory.Delete(localPath + "TMP", false);
+
             using (StreamWriter file =
             new StreamWriter(localPath)) {
                 file.WriteLine("");
