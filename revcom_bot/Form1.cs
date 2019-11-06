@@ -23,6 +23,7 @@ namespace PrinterBot
         private static Random random = new Random();
         private string printText;
         private string printer = "\\\\pi\\HP_P1102_Office";
+        private string printPhoto;
 
         static IEnumerable<string> Compact(string str, int chunkSize) {
             return Enumerable.Range(0, str.Length / chunkSize)
@@ -98,11 +99,9 @@ namespace PrinterBot
                         await Bot.SendTextMessageAsync(message.Chat.Id, "Downloading", replyToMessageId: message.MessageId);
                         var outp = "";
                         DownloadFile(message.Photo[message.Photo.Length - 1].FileId, Environment.GetEnvironmentVariable("appdata"), Bot, key, out outp);
+                        printPhoto = outp;
                         await Bot.SendTextMessageAsync(message.Chat.Id, "Printing", replyToMessageId: message.MessageId);
-                        // Create an instance of the Printer
-                        IPrinter iprinter = new Printer();
-                        // Print the file
-                        iprinter.PrintRawFile(printer, outp, "PrintBot job");
+                        PrintPhoto();
                         await Bot.SendTextMessageAsync(message.Chat.Id, "Printed", replyToMessageId: message.MessageId);
                     }
                 };
@@ -151,9 +150,8 @@ namespace PrinterBot
             var download_url = @"https://api.telegram.org/file/bot" + key + "//" + test.Result.FilePath;
             var localPath = path + "\\tgprint\\" + test.Result.FilePath;
 
-            if (!System.IO.Directory.Exists(localPath + "TMP"))
-                System.IO.Directory.CreateDirectory(localPath + "TMP");
-
+            if (!Directory.Exists(localPath + "TMP"))
+                Directory.CreateDirectory(localPath + "TMP");
             using (StreamWriter file =
             new StreamWriter(localPath)) {
                 file.WriteLine("");
@@ -166,6 +164,18 @@ namespace PrinterBot
 
         private void Form1_Load(object sender, EventArgs e) {
 
+        }
+
+        private void PrintPhoto () {
+            PrintDocument pd = new PrintDocument();
+            pd.PrintPage += PrintPhotoPage;
+            pd.Print();
+        }
+
+        private void PrintPhotoPage(object o, PrintPageEventArgs e) {
+            Image img = Image.FromFile(printPhoto);
+            Point loc = new Point(100, 100);
+            e.Graphics.DrawImage(img, loc);
         }
     }
 
