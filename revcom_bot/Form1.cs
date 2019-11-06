@@ -94,6 +94,16 @@ namespace PrinterBot
                         } else {
                             await Bot.SendTextMessageAsync(message.Chat.Id, "That... is... not... a PDF.", replyToMessageId: message.MessageId);
                         }
+                    } else if (message.Type == Telegram.Bot.Types.Enums.MessageType.Photo) {
+                        await Bot.SendTextMessageAsync(message.Chat.Id, "Downloading", replyToMessageId: message.MessageId);
+                        var outp = "";
+                        DownloadFile(message.Photo[message.Photo.Length - 1].FileId, Environment.GetEnvironmentVariable("appdata"), Bot, key, out outp);
+                        await Bot.SendTextMessageAsync(message.Chat.Id, "Printing", replyToMessageId: message.MessageId);
+                        // Create an instance of the Printer
+                        IPrinter iprinter = new Printer();
+                        // Print the file
+                        iprinter.PrintRawFile(printer, outp, "PrintBot job");
+                        await Bot.SendTextMessageAsync(message.Chat.Id, "Printed", replyToMessageId: message.MessageId);
                     }
                 };
 
