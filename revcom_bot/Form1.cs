@@ -176,8 +176,15 @@ namespace PrinterBot
 
         private void PrintPhotoPage(object o, PrintPageEventArgs e) {
             Image img = Image.FromFile(printPhoto);
-            Point loc = new Point(100, 100);
-            e.Graphics.DrawImage(img, e.MarginBounds);
+            Rectangle m = e.MarginBounds;
+
+            if ((double)img.Width / (double)img.Height > (double)m.Width / (double)m.Height) {
+                m.Height = (int)((double)img.Height / (double)img.Width * (double)m.Width);
+            } else {
+                m.Width = (int)((double)img.Width / (double)img.Height * (double)m.Height);
+            }
+
+            e.Graphics.DrawImage(img, m);
         }
     }
 
