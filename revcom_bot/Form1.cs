@@ -195,7 +195,7 @@ namespace PrinterBot
                 Graphics g = ppeArgs.Graphics;
                 string outp = "  PrinterBot Test Page\n" +
                               "  " + printer + "\n" + 
-                              "  If you see this page, PrintBot is configured properly.\n\n" +
+                              "  If you see this page, PrinterBot is configured properly.\n\n" +
                               "  What is PrinterBot?\n" +
                               "  It's a Telegram bot that prints anything sent to it.";
                 g.DrawString(outp, FontNormal, Brushes.Black, 0, 20, new StringFormat());
